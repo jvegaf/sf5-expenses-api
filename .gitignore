@@ -1,0 +1,19 @@
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> Other files ###
+.idea
+.env.local
+.DS_store
+.docker-sync
+.php_cs.cache
+config/jwt
+.php_cs.cache
+###< Other files ###
