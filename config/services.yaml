@@ -2,6 +2,8 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
+        bind:
+            $roleValidators: !tagged app.role_validator
 
     App\:
         resource: '../src/*'
@@ -18,3 +20,11 @@ services:
     App\Api\Listener\JWTCreatedListener:
         tags:
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
+
+    _instanceof:
+        App\Api\Listener\PreWriteListener:
+            tags:
+                - { name: kernel.event_listener, event: kernel.view, method: onKernelView, priority: 33}
+
+        App\Security\Validator\Role\RoleValidator:
+            tags: ['app.rol_validator' ]

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Security\Role;
+use phpDocumentor\Reflection\Types\This;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -77,6 +78,11 @@ class User implements UserInterface
         return $this->roles;
     }
 
+    public function setRoles(array $roles): void
+    {
+        $this->roles = $roles;
+    }
+
     public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
@@ -103,5 +109,10 @@ class User implements UserInterface
 
     public function eraseCredentials(): void
     {
+    }
+
+    public function equals(User $user): bool
+    {
+        return $this->getId() === $user->getId();
     }
 }

@@ -1,0 +1,38 @@
+POST http://localhost:200/api/v1/login_check
+Content-Type: multipart/form-data ;boundary=----WebKitFormBoundarypLWTdX7Pq1HLe4BD
+
+------WebKitFormBoundarypLWTdX7Pq1HLe4BD
+Content-Disposition: form-data; name="_email"
+
+josevega234@me.com
+------WebKitFormBoundarypLWTdX7Pq1HLe4BD
+Content-Disposition: form-data; name="_password"
+
+password
+------WebKitFormBoundarypLWTdX7Pq1HLe4BD--
+
+###
+
+
+###
+POST http://localhost:200/api/v1/users/register
+Content-Type: application/json
+
+{
+  "name": "Ruben",
+  "email": "ruben@me.com",
+  "password": "password"
+}
+
+###
+POST http://localhost:200/api/v1/users/register
+Content-Type: application/json
+
+{
+  "name": "Josito",
+  "email": "josevega234@me.com",
+  "password": "password"
+}
+
+###
+
