@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Exception\Role;
-
 
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
@@ -12,6 +12,6 @@ class RequiredRoleToAddRoleAdminNotFoundException extends BadRequestHttpExceptio
 
     public static function fromRole(string $role): self
     {
-        throw new self(sprintf(self::MESSAGE, $role));
+        throw new self(\sprintf(self::MESSAGE, $role));
     }
 }

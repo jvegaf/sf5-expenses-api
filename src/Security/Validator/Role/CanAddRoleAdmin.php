@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Security\Validator\Role;
-
 
 use App\Api\Action\RequestTransformer;
 use App\Exception\Role\RequiredRoleToAddRoleAdminNotFoundException;
@@ -21,12 +21,14 @@ class CanAddRoleAdmin implements RoleValidator
 
     public function validate(Request $request): array
     {
-        $roles = array_unique(RequestTransformer::getRequiredField($request, 'roles'));
-        if (in_array(Role::ROLE_ADMIN, $roles, true)){
-            if (!$this->security->isGranted(Role::ROLE_ADMIN)){
+        $roles = \array_unique(RequestTransformer::getRequiredField($request, 'roles'));
+
+        if (\in_array(Role::ROLE_ADMIN, $roles, true)) {
+            if (!$this->security->isGranted(Role::ROLE_ADMIN)) {
                 throw RequiredRoleToAddRoleAdminNotFoundException::fromRole(Role::ROLE_ADMIN);
             }
         }
+
         return $roles;
     }
 }

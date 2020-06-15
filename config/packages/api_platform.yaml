@@ -12,6 +12,6 @@ api_platform:
                 name: Authorization
                 type: header
     title: 'SF5 Expenses API'
-    description: 'Curso de SF5'
+    description: 'An awesome API built with Symfony 5.0, PHP 7.4 and API Platform'
     version: 1.0
     show_webby: false

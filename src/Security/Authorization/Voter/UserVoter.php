@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Security\Authorization\Voter;
-
 
 use App\Entity\User;
 use App\Security\Role;
@@ -16,7 +16,7 @@ class UserVoter extends BaseVoter
 
     protected function supports(string $attribute, $subject): bool
     {
-        return in_array($attribute, $this->getSupportedAttributes(), true);
+        return \in_array($attribute, $this->getSupportedAttributes(), true);
     }
 
     /**
@@ -26,17 +26,19 @@ class UserVoter extends BaseVoter
     {
         /** @var User $tokenUser */
         $tokenUser = $token->getUser();
-        if (self::USER_READ === $attribute){
-            if (null === $subject){
+
+        if (self::USER_READ === $attribute) {
+            if (null === $subject) {
                 return $this->security->isGranted(Role::ROLE_ADMIN);
             }
 
             return $this->security->isGranted(Role::ROLE_ADMIN) || $subject->equals($tokenUser);
         }
 
-        if (in_array($attribute, [self::USER_UPDATE, self::USER_DELETE])) {
+        if (\in_array($attribute, [self::USER_UPDATE, self::USER_DELETE])) {
             return $this->security->isGranted(Role::ROLE_ADMIN) || $subject->equals($tokenUser);
         }
+
         return false;
     }
 
@@ -45,7 +47,7 @@ class UserVoter extends BaseVoter
         return [
             self::USER_READ,
             self::USER_UPDATE,
-            self::USER_DELETE
+            self::USER_DELETE,
         ];
     }
 }
