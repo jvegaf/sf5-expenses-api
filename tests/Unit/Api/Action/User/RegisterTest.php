@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Tests\Unit\Api\Action\User;
-
 
 use App\Api\Action\User\Register;
 use App\Entity\User;
@@ -15,7 +15,6 @@ use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-
 
 class RegisterTest extends TestCase
 {
@@ -48,7 +47,6 @@ class RegisterTest extends TestCase
     /**
      * @throws \Exception
      */
-
     public function testShouldRegisterUser(): void
     {
         $payload = [
@@ -57,7 +55,7 @@ class RegisterTest extends TestCase
             'password' => 'random_password',
         ];
 
-        $request = new Request([],[],[],[],[],[],json_encode($payload));
+        $request = new Request([], [], [], [], [], [], json_encode($payload));
 
         $this->userRepositoryProphecy->findOneByEmail($payload['email'])->willReturn(null);
         $this->encoderServiceProphecy->generateEncodedPasswordForUser(
@@ -82,10 +80,10 @@ class RegisterTest extends TestCase
         $response = $this->action->__invoke($request);
         $this->assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
     }
+
     /**
      * @throws \Exception
      */
-
     public function testShouldThrowExceptionWhenRegisterUserPreviouslyRegistered(): void
     {
         $payload = [
@@ -94,7 +92,7 @@ class RegisterTest extends TestCase
             'password' => 'random_password',
         ];
 
-        $request = new Request([],[],[],[],[],[],json_encode($payload));
+        $request = new Request([], [], [], [], [], [], json_encode($payload));
 
         $user = new User($payload['name'], $payload['email']);
         $this->userRepositoryProphecy->findOneByEmail($payload['email'])->willReturn($user);
@@ -102,6 +100,4 @@ class RegisterTest extends TestCase
 
         $this->action->__invoke($request);
     }
-
-
 }

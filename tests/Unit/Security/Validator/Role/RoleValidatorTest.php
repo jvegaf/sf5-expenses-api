@@ -33,6 +33,7 @@ class RoleValidatorTest extends TestCase
 
         $this->assertIsArray($response);
     }
+
     public function testInvalidRoles(): void
     {
         $payload = [
@@ -46,6 +47,5 @@ class RoleValidatorTest extends TestCase
         $this->expectException(UnsupportedRoleException::class);
         $this->expectExceptionMessage('Unsupported role ROLE_FAKE');
         $this->validator->validate($request);
-
     }
 }

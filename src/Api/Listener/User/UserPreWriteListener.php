@@ -10,7 +10,6 @@ use App\Entity\User;
 use App\Security\Validator\Role\RoleValidator;
 use App\Service\Password\EncoderService;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
-use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class UserPreWriteListener implements PreWriteListener
 {

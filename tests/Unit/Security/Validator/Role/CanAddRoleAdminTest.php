@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Tests\Unit\Security\Validator\Role;
-
 
 use App\Exception\Role\RequiredRoleToAddRoleAdminNotFoundException;
 use App\Security\Role;
@@ -28,7 +28,7 @@ class CanAddRoleAdminTest extends TestCase
         $this->validator = new CanAddRoleAdmin($this->security);
     }
 
-    public function testCanAddRoleAdmin() :void
+    public function testCanAddRoleAdmin(): void
     {
         $payload = [
             'roles' => [
@@ -44,7 +44,7 @@ class CanAddRoleAdminTest extends TestCase
         $this->assertIsArray($response);
     }
 
-    public function testCanNotAddRoleAdmin() :void
+    public function testCanNotAddRoleAdmin(): void
     {
         $payload = [
             'roles' => [
@@ -59,6 +59,4 @@ class CanAddRoleAdminTest extends TestCase
         $this->expectException(RequiredRoleToAddRoleAdminNotFoundException::class);
         $this->validator->validate($request);
     }
-
-
 }

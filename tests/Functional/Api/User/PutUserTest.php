@@ -17,7 +17,7 @@ class PutUserTest extends UserTestBase
             'roles' => [
                 Role::ROLE_ADMIN,
                 Role::ROLE_USER,
-            ]
+            ],
         ];
 
         self::$admin->request('PUT', \sprintf('%s/%s.%s', $this->endpoint, self::IDS['user_id'], self::FORMAT), [], [], [], \json_encode($payload));
@@ -39,7 +39,7 @@ class PutUserTest extends UserTestBase
             'roles' => [
                 Role::ROLE_ADMIN,
                 Role::ROLE_USER,
-            ]
+            ],
         ];
 
         self::$user->request('PUT', \sprintf('%s/%s.%s', $this->endpoint, self::IDS['admin_id'], self::FORMAT), [], [], [], \json_encode($payload));
@@ -57,7 +57,7 @@ class PutUserTest extends UserTestBase
             'roles' => [
                 Role::ROLE_ADMIN,
                 'ROLE_FAKE',
-            ]
+            ],
         ];
 
         self::$admin->request('PUT', \sprintf('%s/%s.%s', $this->endpoint, self::IDS['user_id'], self::FORMAT), [], [], [], \json_encode($payload));
@@ -75,7 +75,7 @@ class PutUserTest extends UserTestBase
             'roles' => [
                 Role::ROLE_ADMIN,
                 Role::ROLE_USER,
-            ]
+            ],
         ];
 
         self::$user->request('PUT', \sprintf('%s/%s.%s', $this->endpoint, self::IDS['user_id'], self::FORMAT), [], [], [], \json_encode($payload));
