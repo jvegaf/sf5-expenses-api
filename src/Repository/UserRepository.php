@@ -21,6 +21,14 @@ class UserRepository extends BaseRepository
         return $user;
     }
 
+    public function findOneById(string $userId): ?User
+    {
+        /** @var User $user */
+        $user = $this->objectRepository->findOneBy(['id' => $userId]);
+
+        return $user;
+    }
+
     public function save(User $user): void
     {
         $this->saveEntity($user);
