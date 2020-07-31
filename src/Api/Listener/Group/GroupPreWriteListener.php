@@ -1,9 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
-
 namespace App\Api\Listener\Group;
-
 
 use App\Api\Listener\PreWriteListener;
 use App\Entity\Group;
@@ -28,11 +27,11 @@ class GroupPreWriteListener implements PreWriteListener
         $tokenUser = $this->tokenStorage->getToken()->getUser();
         $request = $event->getRequest();
 
-        if (self::POST_GROUP === $request->get('_route')){
+        if (self::POST_GROUP === $request->get('_route')) {
             /** @var Group $group */
             $group = $event->getControllerResult();
 
-            if (!$group->isOwnedBy($tokenUser)){
+            if (!$group->isOwnedBy($tokenUser)) {
                 throw CanNotAddAnotherOwnerException::create();
             }
 

@@ -30,9 +30,10 @@ class GroupVoter extends BaseVoter
         $tokenUser = $token->getUser();
 
         if (self::GROUP_READ === $attribute) {
-            if ($subject === null) {
+            if (null === $subject) {
                 return $this->security->isGranted(Role::ROLE_ADMIN);
             }
+
             return $this->security->isGranted(Role::ROLE_ADMIN) || $this->groupRepository->userIsMember(
                     $subject,
                     $tokenUser
@@ -44,7 +45,6 @@ class GroupVoter extends BaseVoter
         }
 
         if (self::GROUP_UPDATE === $attribute) {
-
             return $this->security->isGranted(Role::ROLE_ADMIN) || $this->groupRepository->userIsMember(
                     $subject,
                     $tokenUser
@@ -52,7 +52,6 @@ class GroupVoter extends BaseVoter
         }
 
         if (self::GROUP_DELETE === $attribute) {
-
             return $this->security->isGranted(Role::ROLE_ADMIN) || $subject->isOwnedBy($tokenUser);
         }
 

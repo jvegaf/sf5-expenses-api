@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-
 use App\Entity\Group;
 use App\Entity\User;
 
@@ -30,6 +29,7 @@ class GroupRepository extends BaseRepository
                 return true;
             }
         }
+
         return false;
     }
 }

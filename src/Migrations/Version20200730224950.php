@@ -7,15 +7,14 @@ namespace DoctrineMigrations;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
-
 final class Version20200730224950 extends AbstractMigration
 {
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return 'Creates `user_group` and `user_group_user` tables';
     }
 
-    public function up(Schema $schema) : void
+    public function up(Schema $schema): void
     {
         $this->addSql(
             'CREATE TABLE user_group (
@@ -41,7 +40,7 @@ final class Version20200730224950 extends AbstractMigration
         );
     }
 
-    public function down(Schema $schema) : void
+    public function down(Schema $schema): void
     {
         $this->addSql('DROP TABLE user_group_user');
         $this->addSql('DROP TABLE user_group');
