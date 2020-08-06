@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace App\Api\Action\Group;
 
 use App\Api\Action\RequestTransformer;
+use App\Entity\User;
 use App\Repository\GroupRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class AddUser
 {
-
     private UserRepository $userRepository;
     private GroupRepository $groupRepository;
 
@@ -34,7 +34,7 @@ class AddUser
         $userId = RequestTransformer::getRequiredField($request, 'user_id');
         $group = $this->groupRepository->findOneById($groupId);
 
-        if ($group === null) {
+        if (null === $group) {
             throw new BadRequestHttpException('Group not found');
         }
 
@@ -43,12 +43,17 @@ class AddUser
         }
 
         $newUser = $this->userRepository->findOneById($userId);
-        if ($newUser === null) {
+        if (null === $newUser) {
             throw new BadRequestHttpException('User not found');
+        }
+
+        if ($this->groupRepository->userIsMember($group, $newUser)){
+            throw new ConflictHttpException('this user already exist in this group');
         }
 
         $group->addUser($newUser);
         $this->groupRepository->save($group);
+
         return new JsonResponse(
             [
                 'message' => sprintf('user %s added to group %s', $userId, $groupId),

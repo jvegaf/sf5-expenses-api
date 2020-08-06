@@ -14,7 +14,6 @@ use Symfony\Component\Security\Csrf\TokenStorage\TokenStorageInterface;
 
 class UserValueResolver implements ArgumentValueResolverInterface
 {
-
     private TokenStorageInterface $tokenStorage;
     private UserRepository $userRepository;
 
@@ -26,11 +25,11 @@ class UserValueResolver implements ArgumentValueResolverInterface
 
     public function supports(Request $request, ArgumentMetadata $argument): bool
     {
-        if (User::class !== $argument->getType()){
+        if (User::class !== $argument->getType()) {
             return false;
         }
         $token = $this->tokenStorage->getToken();
-        if (!$token instanceof TokenInterface){
+        if (!$token instanceof TokenInterface) {
             return false;
         }
 
