@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class AddUser
+class RemoveUser
 {
     private GroupService $groupService;
 
@@ -21,16 +21,16 @@ class AddUser
     }
 
     /**
-     * @Route("/groups/add_user", methods={"POST"})
+     * @Route("/groups/remove_user", methods={"POST"})
      */
     public function __invoke(Request $request, User $user): JsonResponse
     {
-        $this->groupService->addUserToGroup(
+        $this->groupService->removeUserFromGroup(
             RequestTransformer::getRequiredField($request, 'group_id'),
             RequestTransformer::getRequiredField($request, 'user_id'),
             $user
         );
 
-        return new JsonResponse(null, JsonResponse::HTTP_CREATED);
+        return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
     }
 }

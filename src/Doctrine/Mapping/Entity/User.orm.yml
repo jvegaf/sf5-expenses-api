@@ -10,9 +10,9 @@ App\Entity\User:
     groups:
       targetEntity: Group
       inversedBy: users
+      cascade: [remove]
       joinTable:
         name: user_group_user
-
 
   fields:
     name:

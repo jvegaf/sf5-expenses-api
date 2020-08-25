@@ -48,8 +48,6 @@ services:
     command: mysqld --sql_mode="STRICT_ALL_TABLES,NO_ENGINE_SUBSTITUTION"
     volumes:
       - sf5-expenses-api-db-data:/var/lib/mysql
-      - ./docker/mysql-entrypoint-initdb.d:/docker-entrypoint-initdb.d
-
     networks:
       - sf5-expenses-api-network
 

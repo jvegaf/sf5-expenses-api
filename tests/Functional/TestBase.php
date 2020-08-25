@@ -22,6 +22,8 @@ class TestBase extends WebTestCase
     protected const IDS = [
         'admin_id' => '0c9a412e-2f5a-41f8-b449-6f6bcd25e001',
         'user_id' => '0c9a412e-2f5a-41f8-b449-6f6bcd25e002',
+        'admin_group_id' => '0c9a412e-2f5a-41f8-b449-6f6bcd25e003',
+        'user_group_id' => '0c9a412e-2f5a-41f8-b449-6f6bcd25e004',
     ];
 
     protected static ?KernelBrowser $client = null;

@@ -86,6 +86,13 @@ class Group
         $user->addGroup($this);
     }
 
+    public function removeUser(User $user): void
+    {
+        $this->users->removeElement($user);
+
+        $user->removeGroup($this);
+    }
+
     public function isOwnedBy(User $user): bool
     {
         return $this->getOwner()->getId() === $user->getId();
