@@ -7,14 +7,15 @@ namespace App\Api\Listener\Group;
 use App\Api\Listener\PreWriteListener;
 use App\Entity\Group;
 use App\Entity\User;
-use App\Exception\Group\CanNotAddAnotherOwnerException;
+use App\Exception\Group\CannotAddAnotherOwnerException;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class GroupPreWriteListener implements PreWriteListener
 {
-    private TokenStorageInterface $tokenStorage;
     private const POST_GROUP = 'api_groups_post_collection';
+
+    private TokenStorageInterface $tokenStorage;
 
     public function __construct(TokenStorageInterface $tokenStorage)
     {
@@ -25,6 +26,7 @@ class GroupPreWriteListener implements PreWriteListener
     {
         /** @var User $tokenUser */
         $tokenUser = $this->tokenStorage->getToken()->getUser();
+
         $request = $event->getRequest();
 
         if (self::POST_GROUP === $request->get('_route')) {
@@ -32,7 +34,7 @@ class GroupPreWriteListener implements PreWriteListener
             $group = $event->getControllerResult();
 
             if (!$group->isOwnedBy($tokenUser)) {
-                throw CanNotAddAnotherOwnerException::create();
+                throw CannotAddAnotherOwnerException::create();
             }
 
             $group->addUser($tokenUser);

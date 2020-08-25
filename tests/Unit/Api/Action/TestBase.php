@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Tests\Unit\Api\Action;
@@ -12,12 +13,15 @@ class TestBase extends TestCase
 {
     /** @var ObjectProphecy|UserRepository */
     protected $userRepositoryProphecy;
+
     protected UserRepository $userRepository;
+
     /** @var ObjectProphecy|GroupRepository */
     protected $groupRepositoryProphecy;
+
     protected GroupRepository $groupRepository;
 
-    protected function setUp()
+    public function setUp(): void
     {
         $this->userRepositoryProphecy = $this->prophesize(UserRepository::class);
         $this->userRepository = $this->userRepositoryProphecy->reveal();

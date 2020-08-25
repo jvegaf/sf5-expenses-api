@@ -17,7 +17,9 @@ use Symfony\Component\Security\Core\Security;
 class DoctrineUserExtension implements QueryCollectionExtensionInterface
 {
     private TokenStorageInterface $tokenStorage;
+
     private Security $security;
+
     private GroupRepository $groupRepository;
 
     public function __construct(
@@ -44,12 +46,14 @@ class DoctrineUserExtension implements QueryCollectionExtensionInterface
         if ($this->security->isGranted(Role::ROLE_ADMIN)) {
             return;
         }
+
         /** @var User $user */
         $user = $this->tokenStorage->getToken()->getUser();
+
         $rootAlias = $qb->getRootAliases()[0];
 
         if (Group::class === $resourceClass) {
-            $qb->andWhere(sprintf('%s.%s = :currentUser', $rootAlias, $this->getResources()[$resourceClass]));
+            $qb->andWhere(\sprintf('%s.%s = :currentUser', $rootAlias, $this->getResources()[$resourceClass]));
             $qb->setParameter(':currentUser', $user);
         }
     }

@@ -38,8 +38,8 @@ class User implements UserInterface
         $this->name = $name;
         $this->email = $email;
         $this->roles[] = Role::ROLE_USER;
-        $this->groups = new ArrayCollection();
         $this->createdAt = new \DateTime();
+        $this->groups = new ArrayCollection();
         $this->markAsUpdated();
     }
 

@@ -6,17 +6,20 @@ namespace App\Api\Action\Group;
 
 use App\Api\Action\RequestTransformer;
 use App\Entity\User;
+use App\Exception\Group\CannotAddUsersToGroupException;
+use App\Exception\Group\GroupDoesNotExistException;
+use App\Exception\User\UserAlreadyMemberOfGroupException;
+use App\Exception\User\UserDoesNotExist;
 use App\Repository\GroupRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AddUser
 {
     private UserRepository $userRepository;
+
     private GroupRepository $groupRepository;
 
     public function __construct(UserRepository $userRepository, GroupRepository $groupRepository)
@@ -26,37 +29,40 @@ class AddUser
     }
 
     /**
-     * @Route ("/groups/add_user", methods={"POST"})
+     * @Route("/groups/add_user", methods={"POST"})
      */
     public function __invoke(Request $request, User $user): JsonResponse
     {
         $groupId = RequestTransformer::getRequiredField($request, 'group_id');
         $userId = RequestTransformer::getRequiredField($request, 'user_id');
-        $group = $this->groupRepository->findOneById($groupId);
 
-        if (null === $group) {
-            throw new BadRequestHttpException('Group not found');
+        if (null === $group = $this->groupRepository->findOneById($groupId)) {
+            throw GroupDoesNotExistException::fromGroupId($groupId);
         }
 
         if (!$this->groupRepository->userIsMember($group, $user)) {
-            throw new BadRequestHttpException('You can not add users to this group');
+            throw CannotAddUsersToGroupException::create();
         }
 
-        $newUser = $this->userRepository->findOneById($userId);
-        if (null === $newUser) {
-            throw new BadRequestHttpException('User not found');
+        if (null === $newUser = $this->userRepository->findOneById($userId)) {
+            throw UserDoesNotExist::fromUserId($userId);
         }
 
-        if ($this->groupRepository->userIsMember($group, $newUser)){
-            throw new ConflictHttpException('this user already exist in this group');
+        if ($this->groupRepository->userIsMember($group, $newUser)) {
+            throw UserAlreadyMemberOfGroupException::fromUserId($userId);
         }
 
         $group->addUser($newUser);
+
         $this->groupRepository->save($group);
 
         return new JsonResponse(
             [
-                'message' => sprintf('user %s added to group %s', $userId, $groupId),
+                'message' => \sprintf(
+                    'User with id %s has been added to group with id %s',
+                    $newUser->getId(),
+                    $group->getId()
+                ),
             ]
         );
     }

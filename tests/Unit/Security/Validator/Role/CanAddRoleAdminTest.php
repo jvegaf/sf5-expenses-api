@@ -16,6 +16,7 @@ class CanAddRoleAdminTest extends TestCase
 {
     /** @var ObjectProphecy|Security */
     private $securityProphecy;
+
     private Security $security;
 
     private CanAddRoleAdmin $validator;
@@ -37,14 +38,16 @@ class CanAddRoleAdminTest extends TestCase
             ],
         ];
 
-        $request = new Request([], [], [], [], [], [], json_encode($payload));
+        $request = new Request([], [], [], [], [], [], \json_encode($payload));
+
         $this->securityProphecy->isGranted(Role::ROLE_ADMIN)->willReturn(true);
 
         $response = $this->validator->validate($request);
+
         $this->assertIsArray($response);
     }
 
-    public function testCanNotAddRoleAdmin(): void
+    public function testCannotAddRoleAdmin(): void
     {
         $payload = [
             'roles' => [
@@ -53,10 +56,13 @@ class CanAddRoleAdminTest extends TestCase
             ],
         ];
 
-        $request = new Request([], [], [], [], [], [], json_encode($payload));
+        $request = new Request([], [], [], [], [], [], \json_encode($payload));
+
         $this->securityProphecy->isGranted(Role::ROLE_ADMIN)->willReturn(false);
 
         $this->expectException(RequiredRoleToAddRoleAdminNotFoundException::class);
+        $this->expectExceptionMessage('ROLE_ADMIN required to perform this operation');
+
         $this->validator->validate($request);
     }
 }

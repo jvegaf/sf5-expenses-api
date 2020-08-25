@@ -18,7 +18,7 @@ class GroupVoter extends BaseVoter
 
     protected function supports(string $attribute, $subject)
     {
-        return in_array($attribute, $this->getSupportedAttributes(), true);
+        return \in_array($attribute, $this->getSupportedAttributes(), true);
     }
 
     /**
@@ -34,10 +34,8 @@ class GroupVoter extends BaseVoter
                 return $this->security->isGranted(Role::ROLE_ADMIN);
             }
 
-            return $this->security->isGranted(Role::ROLE_ADMIN) || $this->groupRepository->userIsMember(
-                    $subject,
-                    $tokenUser
-                );
+            return $this->security->isGranted(Role::ROLE_ADMIN)
+                || $this->groupRepository->userIsMember($subject, $tokenUser);
         }
 
         if (self::GROUP_CREATE === $attribute) {
@@ -45,14 +43,13 @@ class GroupVoter extends BaseVoter
         }
 
         if (self::GROUP_UPDATE === $attribute) {
-            return $this->security->isGranted(Role::ROLE_ADMIN) || $this->groupRepository->userIsMember(
-                    $subject,
-                    $tokenUser
-                );
+            return $this->security->isGranted(Role::ROLE_ADMIN)
+                || $this->groupRepository->userIsMember($subject, $tokenUser);
         }
 
         if (self::GROUP_DELETE === $attribute) {
-            return $this->security->isGranted(Role::ROLE_ADMIN) || $subject->isOwnedBy($tokenUser);
+            return $this->security->isGranted(Role::ROLE_ADMIN)
+                || $subject->isOwnedBy($tokenUser);
         }
 
         return false;

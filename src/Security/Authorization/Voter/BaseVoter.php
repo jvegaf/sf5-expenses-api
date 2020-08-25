@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\Security;
 abstract class BaseVoter extends Voter
 {
     protected Security $security;
+
     protected GroupRepository $groupRepository;
 
     public function __construct(Security $security, GroupRepository $groupRepository)
