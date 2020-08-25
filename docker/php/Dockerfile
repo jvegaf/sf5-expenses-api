@@ -1,4 +1,4 @@
-FROM php:7.4.0-fpm
+FROM php:7.4.9-fpm
 
 ARG UID
 EXPOSE $UID

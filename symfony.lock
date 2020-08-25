@@ -16,6 +16,9 @@
             "src/Entity/.gitignore"
         ]
     },
+    "brick/math": {
+        "version": "0.9.1"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -107,11 +110,14 @@
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
+    "doctrine/sql-formatter": {
+        "version": "1.1.1"
+    },
     "fig/link-util": {
         "version": "1.0.0"
     },
-    "jdorn/sql-formatter": {
-        "version": "v1.2.17"
+    "laminas/laminas-zendframework-bridge": {
+        "version": "1.1.0"
     },
     "lcobucci/jwt": {
         "version": "3.3.1"
@@ -181,6 +187,9 @@
     },
     "psr/log": {
         "version": "1.1.2"
+    },
+    "ramsey/collection": {
+        "version": "1.1.0"
     },
     "ramsey/uuid": {
         "version": "3.9.1"
@@ -339,11 +348,17 @@
     "symfony/polyfill-intl-idn": {
         "version": "v1.13.1"
     },
+    "symfony/polyfill-intl-normalizer": {
+        "version": "v1.18.1"
+    },
     "symfony/polyfill-mbstring": {
         "version": "v1.13.1"
     },
     "symfony/polyfill-php73": {
         "version": "v1.13.1"
+    },
+    "symfony/polyfill-php80": {
+        "version": "v1.18.1"
     },
     "symfony/property-access": {
         "version": "v5.0.1"
@@ -448,6 +463,9 @@
     },
     "twig/twig": {
         "version": "v3.0.0"
+    },
+    "webimpress/safe-writer": {
+        "version": "2.1.0"
     },
     "webmozart/assert": {
         "version": "1.6.0"
